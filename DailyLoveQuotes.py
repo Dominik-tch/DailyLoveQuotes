@@ -24,9 +24,9 @@ else:
 #save the current date
 #current_date = "2025-03-02"
 current_date = datetime.now().date()
-
+added_title = ""
 #check if the current date is already memorized else memorize it
-if memory["days"] == current_date:
+if memory["days"] == str(current_date):
     loveQuote = "You already had your daily love quote ;)\nLook forward to tomorrow! "
 else:
     #memory["days"] = "2025-03-02"
@@ -41,7 +41,7 @@ else:
 
     #checks if there are enogh quotes left and chooses the qoute
     listLen = len(quoteList) - 1
-    added_title = ""
+    
     if listLen < memory["quoteNum"]:
         loveQuote = "I'm very sorry but you ran out of saved love quotes.\nYou are as strong as on every other day, so this is no problem for you!\nNow contact your loved one to update your love quotes as fast as possible!"
     else:
