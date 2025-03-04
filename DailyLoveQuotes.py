@@ -30,7 +30,7 @@ if memory["days"] == current_date:
     loveQuote = "You already had your daily love quote ;)\nLook forward to tomorrow! "
 else:
     #memory["days"] = "2025-03-02"
-    memory["days"] = current_date
+    memory["days"] = str(current_date)
 
     #loads the quotes from the file
     try:
@@ -62,7 +62,7 @@ root.withdraw()  # Hide the main window
 
 # Custom pop-up with large font
 popup = tk.Toplevel()
-popup.title("Your daily love quote <3" + added_title)
+popup.title("💖Your daily love quote <3💖" + added_title)
 
 popup.minsize(400, 250)
 
