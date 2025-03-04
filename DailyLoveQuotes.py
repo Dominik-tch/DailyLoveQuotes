@@ -29,8 +29,9 @@ current_date = datetime.now().date()
 if memory["days"] == current_date:
     loveQuote = "You already had your daily love quote ;)\nLook forward to tomorrow! "
 else:
-    memory["days"] = "2025-03-02"
-    #memory["days"] = current_date
+    #memory["days"] = "2025-03-02"
+    memory["days"] = current_date
+
     #loads the quotes from the file
     try:
         with open("QuoteList.json", "r", encoding="utf-8") as file:
