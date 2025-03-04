@@ -22,14 +22,15 @@ else:
         json.dump(memory, file)
 
 #save the current date
-current_date = "2025-03-01"
-#current_date = datetime.now().date()
+#current_date = "2025-03-02"
+current_date = datetime.now().date()
 
 #check if the current date is already memorized else memorize it
 if memory["days"] == current_date:
     loveQuote = "You already had your daily love quote ;)\nLook forward to tomorrow! "
 else:
-    memory["days"] = current_date
+    memory["days"] = "2025-03-02"
+    #memory["days"] = current_date
     #loads the quotes from the file
     try:
         with open("QuoteList.json", "r", encoding="utf-8") as file:
@@ -39,9 +40,13 @@ else:
 
     #checks if there are enogh quotes left and chooses the qoute
     listLen = len(quoteList) - 1
+    added_title = ""
     if listLen < memory["quoteNum"]:
         loveQuote = "I'm very sorry but you ran out of saved love quotes.\nYou are as strong as on every other day, so this is no problem for you!\nNow contact your loved one to update your love quotes as fast as possible!"
     else:
+        if listLen < (memory["quoteNum"] + 5):
+             quotesLeft = listLen - memory["quoteNum"]
+             added_title = "   Attention: Only " + str(quotesLeft) + " love quotes left!"
         encrypted_loveQuote = quoteList[memory["quoteNum"]]
         memory["quoteNum"] += 1
         loveQuote = crypt.decrypt(encrypted_loveQuote, 2334)
@@ -56,9 +61,9 @@ root.withdraw()  # Hide the main window
 
 # Custom pop-up with large font
 popup = tk.Toplevel()
-popup.title("Your daily love quote <3")
+popup.title("Your daily love quote <3" + added_title)
 
-popup.minsize(400, 200)
+popup.minsize(400, 250)
 
 # Create a label with large font
 label = tk.Label(popup, text= loveQuote, font=("Arial", 26, "bold"))
