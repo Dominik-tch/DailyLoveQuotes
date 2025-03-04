@@ -31,7 +31,7 @@ for quote in quoteList:
     buffer = crypt.encrypt(quote, 2334)
     encryptedQuoteList.append(buffer)
 
-""" with open("output.json", "w", encoding="utf-8") as file:
-    json.dump(quoteList, file) """
+with open("QuoteList.json", "w", encoding="utf-8") as file:
+    json.dump(encryptedQuoteList, file)
 
 print(encryptedQuoteList)

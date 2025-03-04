@@ -34,39 +34,39 @@ def getKey(encryptedText, realText):
 
     return "\n#Not found"
 
+if __name__ == "__main__":
+    while(True):
+        
 
-while(True):
-    
+        print("Choose an option: \n  [0] encrypt\n  [1] decrypt\n  [2] get key\n  [q] quit\nEnter the character:")
 
-    print("Choose an option: \n  [0] encrypt\n  [1] decrypt\n  [2] get key\n  [q] quit\nEnter the character:")
+        menuNum = input()
 
-    menuNum = input()
-
-    if menuNum == "q":
-        break
-    
-    elif menuNum == "2":
-        print("!!This only works for positve number keys!!")
-        print("Enter encrypted text:")
-        encryptedText = input()
-        print("Enter decrypted text:")
-        decryptedText = input()
-        key = getKey(encryptedText, decryptedText)
-        print(key)
-    else:
-        print("Enter key:")
-        key = int(input())
-
-        if menuNum == "0":
-            print("Enter text:")
-            userText = input()
-            text = encrypt(userText, key)
-
+        if menuNum == "q":
+            break
+        
+        elif menuNum == "2":
+            print("!!This only works for positve number keys!!")
+            print("Enter encrypted text:")
+            encryptedText = input()
+            print("Enter decrypted text:")
+            decryptedText = input()
+            key = getKey(encryptedText, decryptedText)
+            print(key)
         else:
-            print("Enter text:")
-            userText = input()
-            text = decrypt(userText, key)
+            print("Enter key:")
+            key = int(input())
 
-        print("#######################\n" +
-                text +
-            "\n#######################")
+            if menuNum == "0":
+                print("Enter text:")
+                userText = input()
+                text = encrypt(userText, key)
+
+            else:
+                print("Enter text:")
+                userText = input()
+                text = decrypt(userText, key)
+
+            print("#######################\n" +
+                    text +
+                "\n#######################")
