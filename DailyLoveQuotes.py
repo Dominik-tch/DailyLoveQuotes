@@ -1,15 +1,41 @@
 import json
-import time
+import os
+import sys
+from datetime import datetime
 import tkinter as tk
 from tkinter import messagebox
+memory_fileName = "Memory.json"
+memory = {"days": "", "quoteNum":""}
+
+#Generate a Memory.json file to store information about already used quotes and days
+
+if os.path.exists(memory_fileName):
+    with open("QuoteList.json", "r", encoding="utf-8") as file:
+            memory = json.load(file)
+else:    
+    with open(memory_fileName, "w", encoding="utf-8") as file:
+        json.dump(memory, file)
+
+
+current_date = datetime.now().date()
 
 
 
-with open("QuoteList.json", "r", encoding="utf-8") as file:
-    quoteList = json.load(file)
+
+if memory["days"] == current_date:
+      sys.exit()
+else:
+      memory["days"] = current_date
 
 
 
+
+
+try:
+    with open("QuoteList.json", "r", encoding="utf-8") as file:
+            quoteList = json.load(file)
+except:
+      raise ValueError("Coud not open the QuoteList.json Check if it exits in the same directory (DailyLoveQuotes)")
 
 
 # Create a window
