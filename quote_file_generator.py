@@ -1,3 +1,5 @@
+import json
+import encrypting_tests as crypt
 
 
 print("With this scirpt you can generate a file with your custom quotes\n and encrypt it so they aren't as easy to see for the person who the quotes are for")
@@ -6,7 +8,8 @@ print("[0] enter quote by quote\n[1] import quotes seperated by a defined delimi
 
 menuNum = input()
 quoteList = list()
-if input == "0":
+encryptedQuoteList = list()
+if menuNum == "0":
     print("Enter as many quotes as you want, then enter s to stop entering")
     i = 0
     while(True):
@@ -17,11 +20,18 @@ if input == "0":
         if bufferQuote == "s":
             break
         quoteList.append(bufferQuote)
-elif input == "1":
+elif menuNum == "1":
     print("Enter a list of quotes seperated by a specified delimiter:")
     userList = input()
     print("Enter the delimiter:")
     delimiter = input()
     quoteList = userList.split(delimiter)
 
-print(quoteList)
+for quote in quoteList:
+    buffer = crypt.encrypt(quote, 2334)
+    encryptedQuoteList.append(buffer)
+
+""" with open("output.json", "w", encoding="utf-8") as file:
+    json.dump(quoteList, file) """
+
+print(encryptedQuoteList)
