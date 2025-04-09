@@ -5,6 +5,14 @@ import sys
 from datetime import datetime
 import tkinter as tk
 from tkinter import messagebox
+import subprocess
+import requests
+
+#check current version
+result = subprocess.run(["git", "rev-parse", "HEAD"], stdout=subprocess.PIPE)
+print("Current Version:")
+print(result.stdout.decode("utf-8").strip())
+
 memory_fileName = "Memory.json"
 memory = {"days":"2025-03-01", "quoteNum":0}
 
