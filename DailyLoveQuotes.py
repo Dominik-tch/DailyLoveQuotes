@@ -2,10 +2,9 @@ import json
 import encrypting_tests as crypt
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 import tkinter as tk
-from tkinter import messagebox
-from tkinter import filedialog
+from tkinter import messagebox, filedialog
 import shutil
 import subprocess
 import requests
@@ -13,8 +12,17 @@ import requests
 REPO = "dominik-tch/DailyLoveQuotes"
 BRANCH = "main"
 
+current_date = datetime.now().date()
+memory_fileName = "Memory.json"
+memory = {"days":"2025-03-01", "quoteNum":0}
+
+
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
+def reset_memoryJson():
+     with open(memory_fileName, "w", encoding="utf-8") as file:
+        memory = {"days":current_date - timedelta(days=1), "quoteNum":0}
+     
 
 def select_file_and_copy():
     # Benutzer lässt eine JSON-Datei auswählen
@@ -32,6 +40,9 @@ def select_file_and_copy():
         shutil.copy(file_path, repo_root)
         print(f"Datei '{file_name}' wurde ins Repository kopiert.")
 
+def quoteList_insert():
+     select_file_and_copy()
+     reset_memoryJson()
 
 def git_pull():
     print("Pull started:")
@@ -72,8 +83,7 @@ else:
 print(updateText)
 
 
-memory_fileName = "Memory.json"
-memory = {"days":"2025-03-01", "quoteNum":0}
+
 
 #Generate a Memory.json file to store information about already used quotes and days
 
@@ -90,7 +100,7 @@ else:
 
 #save the current date
 #current_date = "2025-03-02"
-current_date = datetime.now().date()
+
 added_title = ""
 #check if the current date is already memorized else memorize it
 if memory["days"] == str(current_date):
