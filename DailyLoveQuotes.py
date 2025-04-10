@@ -20,8 +20,10 @@ memory = {"days":"2025-03-01", "quoteNum":0}
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
 def reset_memoryJson():
+     print("Reseting")
      with open(memory_fileName, "w", encoding="utf-8") as file:
         memory = {"days":current_date - timedelta(days=1), "quoteNum":0}
+        print(memory)
         json.dump(memory, file)
 
      
@@ -190,7 +192,7 @@ button = tk.Button(popup, text="<3", command=root.destroy, font=("Arial", 30), b
 button.pack(pady=10)
 
 #Copy new QuoteList file
-fileButton = tk.Button(popup, text="Insert new QuoteList\n ##Attention! Exiting QuoteList will be deleted make sure it is already depleted!", command=select_file_and_copy, font=("Arial", fontSize), bg="#aa93af")
+fileButton = tk.Button(popup, text="Insert new QuoteList\n ##Attention! Exiting QuoteList will be deleted make sure it is already depleted!", command=quoteList_insert, font=("Arial", fontSize), bg="#aa93af")
 fileButton.pack(pady=10)
 
 #Update text information for version
