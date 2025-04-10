@@ -22,6 +22,8 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 def reset_memoryJson():
      with open(memory_fileName, "w", encoding="utf-8") as file:
         memory = {"days":current_date - timedelta(days=1), "quoteNum":0}
+        json.dump(memory, file)
+
      
 
 def select_file_and_copy():
@@ -55,8 +57,9 @@ def select_file_and_copy():
         print(f"Datei '{file_name}' wurde ins Repository kopiert.")
 
 def quoteList_insert():
-     select_file_and_copy()
      reset_memoryJson()
+     select_file_and_copy()
+     
 
 def git_pull():
     print("Pull started:")
