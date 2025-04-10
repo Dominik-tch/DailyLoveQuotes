@@ -22,7 +22,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 def reset_memoryJson():
      print("Reseting")
      with open(memory_fileName, "w", encoding="utf-8") as file:
-        memory = {"days":current_date - timedelta(days=1), "quoteNum":0}
+        memory = {"days":str(current_date - timedelta(days=1)), "quoteNum":0}
         print(memory)
         json.dump(memory, file)
 
@@ -107,12 +107,16 @@ print(updateText)
 #Generate a Memory.json file to store information about already used quotes and days
 
 if os.path.exists(memory_fileName):
-    with open(memory_fileName, "r", encoding="utf-8") as file:
-            memory = json.load(file)
-            if isinstance(memory, dict):
-                 print("it is da dictionary")
-            else:
-                 print("#It is not a dict!")
+    try:
+        with open(memory_fileName, "r", encoding="utf-8") as file:
+                memory = json.load(file)
+                if isinstance(memory, dict):
+                    print("it is da dictionary")
+                else:
+                    print("#It is not a dict!")
+    except:
+        with open(memory_fileName, "w", encoding="utf-8") as file:
+            json.dump(memory, file)
 else:    
     with open(memory_fileName, "w", encoding="utf-8") as file:
         json.dump(memory, file)
