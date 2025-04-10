@@ -27,7 +27,7 @@ def get_local_commit():
 
     result = subprocess.run(["git", "rev-parse", "HEAD"], stdout=subprocess.PIPE, cwd=script_dir)
     return result.stdout.decode("utf-8").strip()
-
+#Hallo
 local = get_local_commit()
 remote = get_remote_commit()
 updateText = ""
