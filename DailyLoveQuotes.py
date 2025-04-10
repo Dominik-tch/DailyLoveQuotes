@@ -85,6 +85,14 @@ else:
     with open(memory_fileName, "w", encoding="utf-8") as file:
             json.dump(memory, file)
 
+#check lovequote length and add \n to it
+if len(loveQuote) > 80:
+     firstString = loveQuote[:70]
+     lastString = loveQuote[70:]
+     loveQuote = firstString + "\n" + lastString
+
+
+
 # Create a window
 root = tk.Tk()
 root.withdraw()  # Hide the main window
@@ -96,7 +104,7 @@ popup.title("💖Your daily love quote <3💖" + added_title)
 popup.minsize(400, 250)
 
 # Create a label with large font
-label = tk.Label(popup, text= loveQuote, font=("Arial", 26, "bold"))
+label = tk.Label(popup, text= loveQuote, font=("Arial", 22, "bold"))
 label.pack(padx=20, pady=20)
 
 # Auto-resize window based on content
