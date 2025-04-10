@@ -19,6 +19,11 @@ listDepleted = False
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
+def seeAgain_Button():
+    print("see again")
+    print(memory["quoteNum"])
+    label.config(text=quoteList[memory["quoteNum"]])
+
 def reset_memoryJson():
      print("Reseting")
      with open(memory_fileName, "w", encoding="utf-8") as file:
@@ -27,7 +32,6 @@ def reset_memoryJson():
         json.dump(memory, file)
         updateLabel.config(text="!Reseted!")
 
-     
 
 def select_file_and_copy():
 
@@ -126,7 +130,7 @@ else:
 
 #save the current date
 #current_date = "2025-03-02"
-
+quoteList = ""
 added_title = ""
 #check if the current date is already memorized else memorize it
 if memory["days"] == str(current_date):
@@ -183,7 +187,9 @@ popup.minsize(400, 250)
 label = tk.Label(popup, text= loveQuote, font=("Arial", 22, "bold"), bg="lightpink")
 label.pack(padx=20, pady=20)
 
-
+#See again Button
+seeAgainButton = tk.Button(popup, text="See again <3", command=seeAgain_Button, font=("Arial", 10), bg="#a184af")
+seeAgainButton.pack(pady=10)
 
 #Memory Reset Button
 resetButton = tk.Button(popup, text="Reset the QuoteList and start from beginning", command=reset_memoryJson, font=("Arial", 30), bg="#aa93af")
