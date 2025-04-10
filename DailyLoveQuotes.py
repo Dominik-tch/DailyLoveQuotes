@@ -25,6 +25,10 @@ def reset_memoryJson():
      
 
 def select_file_and_copy():
+
+    #Backup existing QuoteList
+    os.rename("QuoteList.json", "QuoteList_" + current_date +".json")
+
     # Benutzer lässt eine JSON-Datei auswählen
     file_path = filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
     
@@ -34,7 +38,8 @@ def select_file_and_copy():
         fixed_file_name = "QuoteList.json"
         repo_root = "."
         file_name = os.path.basename(file_path)
-        destination_path = os.path.join(repo_root, fixed_file_name)
+        destination_path = os.path.join(repo_root, file_name)
+        os.rename(file_name, "QuoteList.json")
 
         # Kopiere die Datei
         shutil.copy(file_path, repo_root)
