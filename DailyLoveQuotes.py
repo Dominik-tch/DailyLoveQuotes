@@ -141,12 +141,14 @@ else:
 
     #checks if there are enogh quotes left and chooses the qoute
     listLen = len(quoteList) - 1
-    
+    listDepleted = False
     if listLen < memory["quoteNum"]:
-        loveQuote = "I'm very sorry but you ran out of saved love quotes.\nYou are as strong as on every other day, so this is no problem for you!\nNow contact your loved one to update your love quotes as fast as possible!"
+        loveQuote = "I'm very sorry but you ran out of saved love quotes.\nYou are as strong as on every other day, so this is no problem for you!\nNow contact your loved one to update your love quotes as fast as possible! Or reset them."
+        listDepleted = True
     else:
         if listLen < (memory["quoteNum"] + 5):
              quotesLeft = listLen - memory["quoteNum"]
+             
              added_title = "   Attention: Only " + str(quotesLeft) + " love quotes left!"
         encrypted_loveQuote = quoteList[memory["quoteNum"]]
         memory["quoteNum"] += 1
@@ -172,7 +174,7 @@ root.withdraw()  # Hide the main window
 popup = tk.Toplevel()
 popup.title("💖Your daily love quote <3💖" + added_title)
 popup.configure(bg="lightpink")
-popup.minsize(400, 350)
+popup.minsize(400, 550)
 
 # Create a label with large font
 label = tk.Label(popup, text= loveQuote, font=("Arial", 22, "bold"), bg="lightpink")
@@ -191,12 +193,16 @@ y_position = (screen_height // 2) - (popup_height // 2)
 
 popup.geometry(f"{popup_width}x{popup_height}+{x_position}+{y_position}")
 
+#Memory Reset Button
+resetButton = tk.Button(popup, text="Reset the QuoteList and start from beginning", command=reset_memoryJson, font=("Arial", 30), bg="#aa93af")
+if listDepleted:
+    resetButton.pack(pady=10)
 # Close button
 button = tk.Button(popup, text="<3", command=root.destroy, font=("Arial", 30), bg="#a184af")
 button.pack(pady=10)
 
 #Copy new QuoteList file
-fileButton = tk.Button(popup, text="Insert new QuoteList\n ##Attention! Exiting QuoteList will be deleted make sure it is already depleted!", command=quoteList_insert, font=("Arial", fontSize), bg="#aa93af")
+fileButton = tk.Button(popup, text="Insert new QuoteList", command=quoteList_insert, font=("Arial", fontSize), bg="#aa93af")
 fileButton.pack(pady=10)
 
 #Update text information for version
