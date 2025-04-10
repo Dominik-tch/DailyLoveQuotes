@@ -5,6 +5,8 @@ import sys
 from datetime import datetime
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import filedialog
+import shutil
 import subprocess
 import requests
 
@@ -12,7 +14,25 @@ REPO = "dominik-tch/DailyLoveQuotes"
 BRANCH = "main"
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
-#Hallo test update
+
+
+def select_file_and_copy(search_name):
+    # Benutzer lässt eine JSON-Datei auswählen
+    file_path = filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
+    
+    if file_path:
+
+        # Zielpfad im Repository
+        fixed_file_name = search_name
+        repo_root = "."
+        file_name = os.path.basename(file_path)
+        destination_path = os.path.join(repo_root, fixed_file_name)
+
+        # Kopiere die Datei
+        shutil.copy(file_path, repo_root)
+        print(f"Datei '{file_name}' wurde ins Repository kopiert.")
+
+
 def git_pull():
     print("Pull started:")
     try:
