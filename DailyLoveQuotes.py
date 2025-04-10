@@ -11,6 +11,8 @@ import requests
 REPO = "dominik-tch/DailyLoveQuotes"
 BRANCH = "main"
 
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
 def get_remote_commit():
     url = f"https://api.github.com/repos/{REPO}/commits/{BRANCH}"
     response = requests.get(url)
@@ -21,7 +23,7 @@ def get_remote_commit():
         raise Exception("Fehler beim Abrufen des Remote-Commits.")
 #check current version
 def get_local_commit():
-    script_dir = os.path.dirname(os.path.abspath(__file__))
+    
 
     result = subprocess.run(["git", "rev-parse", "HEAD"], stdout=subprocess.PIPE, cwd=script_dir)
     return result.stdout.decode("utf-8").strip()
@@ -65,7 +67,7 @@ else:
 
     #loads the quotes from the file
     try:
-        with open("QuoteList.json", "r", encoding="utf-8") as file:
+        with open(script_dir + "\QuoteList.json", "r", encoding="utf-8") as file:
                 quoteList = json.load(file)
     except:
         raise ValueError("Coud not open the QuoteList.json Check if it exits in the same directory (DailyLoveQuotes)")
