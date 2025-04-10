@@ -141,7 +141,7 @@ updateLabel = tk.Label(popup, text=updateText, font=("Arial", fontSize))
 updateLabel.pack(pady=10)
 
 # update button
-updateButton = tk.Button(popup, text="Update to latest verison", command=git_pull(), font=("Arial", 20))
+updateButton = tk.Button(popup, text="Update to latest verison", command=git_pull, font=("Arial", 20))
 updateButton.pack(pady=10)
 popup.mainloop()
 
