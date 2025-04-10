@@ -12,7 +12,7 @@ REPO = "dominik-tch/DailyLoveQuotes"
 BRANCH = "main"
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
-
+#Hallo test update
 def git_pull():
     print("Pull started:")
     try:
