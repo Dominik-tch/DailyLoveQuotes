@@ -38,7 +38,12 @@ def reset_memoryJson():
 
 
 def select_file_and_copy():
+    # Benutzer lässt eine JSON-Datei auswählen
+    file_path = filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
 
+    if (not file_path) or (file_path == ""):
+        return False
+    
     #Backup existing QuoteList
     uniqueName = False
     uniqueNum = 0
@@ -49,10 +54,6 @@ def select_file_and_copy():
         except:
              uniqueNum += 1
              uniqueName = False
-
-
-    # Benutzer lässt eine JSON-Datei auswählen
-    file_path = filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
     
     if file_path:
 
@@ -66,10 +67,12 @@ def select_file_and_copy():
         # Kopiere die Datei
         shutil.copy(file_path, repo_root)
         print(f"Datei '{file_name}' wurde ins Repository kopiert.")
+    return True
 
 def quoteList_insert():
-     reset_memoryJson()
-     select_file_and_copy()
+     succesful = select_file_and_copy()
+     if succesful:
+        reset_memoryJson()
      
 
 def git_pull():
