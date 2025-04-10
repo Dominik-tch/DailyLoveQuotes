@@ -8,11 +8,32 @@ from tkinter import messagebox
 import subprocess
 import requests
 
-#check current version
-result = subprocess.run(["git", "rev-parse", "HEAD"], stdout=subprocess.PIPE)
-print("Current Version:")
-print(result.stdout.decode("utf-8").strip())
+REPO = "dominik-tch/DailyLoveQuotes"
+BRANCH = "main"
 
+def get_remote_commit():
+    url = f"https://api.github.com/repos/{REPO}/commits/{BRANCH}"
+    response = requests.get(url)
+    print(response.json()["sha"])
+    if response.status_code == 200:
+        return response.json()["sha"]
+    else:
+        raise Exception("Fehler beim Abrufen des Remote-Commits.")
+#check current version
+def get_local_commit():
+    result = subprocess.run(["git", "rev-parse", "HEAD"], stdout=subprocess.PIPE)
+    return result.stdout.decode("utf-8").strip()
+
+local = get_local_commit()
+remote = get_remote_commit()
+updateText = ""
+fontSize = 12
+if local == remote:
+     updateText = "You have the latest version!"
+else:
+     updateText = "There is an update available!"
+     fontSize = 20
+print(updateText)
 memory_fileName = "Memory.json"
 memory = {"days":"2025-03-01", "quoteNum":0}
 
@@ -95,6 +116,9 @@ popup.geometry(f"{popup_width}x{popup_height}+{x_position}+{y_position}")
 button = tk.Button(popup, text="<3", command=root.destroy, font=("Arial", 20))
 button.pack(pady=10)
 
+#Update text information for version
+updateLabel = tk.Label(popup, text=updateText, font=("Arial", fontSize))
+updateLabel.pack(pady=10)
 popup.mainloop()
 
 
