@@ -21,8 +21,12 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 
 def seeAgain_Button():
     print("see again")
-    print(memory["quoteNum"])
-    label.config(text=quoteList[memory["quoteNum"]])
+    with open("QuoteList.json", "r", encoding="utf-8") as file:
+                quoteList = json.load(file)
+    savedLoveQuote = quoteList[memory["quoteNum"]]
+    decryptedsaveQuote = crypt.decrypt(savedLoveQuote, 2334)
+    label.config(text=decryptedsaveQuote)
+    seeAgainButton.pack_forget()
 
 def reset_memoryJson():
      print("Reseting")
@@ -130,7 +134,6 @@ else:
 
 #save the current date
 #current_date = "2025-03-02"
-quoteList = ""
 added_title = ""
 #check if the current date is already memorized else memorize it
 if memory["days"] == str(current_date):
