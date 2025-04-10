@@ -16,14 +16,14 @@ BRANCH = "main"
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
 
-def select_file_and_copy(search_name):
+def select_file_and_copy():
     # Benutzer lässt eine JSON-Datei auswählen
     file_path = filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
     
     if file_path:
 
         # Zielpfad im Repository
-        fixed_file_name = search_name
+        fixed_file_name = "QuoteList.json"
         repo_root = "."
         file_name = os.path.basename(file_path)
         destination_path = os.path.join(repo_root, fixed_file_name)
@@ -64,7 +64,7 @@ updateText = ""
 fontSize = 12
 buttonVisible = False
 if local == remote:
-     updateText = "You have the latest version!"
+     updateText = "You have the latest software version!"
 else:
      updateText = "There is an update available!"
      fontSize = 20
@@ -138,11 +138,11 @@ root.withdraw()  # Hide the main window
 # Custom pop-up with large font
 popup = tk.Toplevel()
 popup.title("💖Your daily love quote <3💖" + added_title)
-
+popup.configure(bg="lightpink")
 popup.minsize(400, 350)
 
 # Create a label with large font
-label = tk.Label(popup, text= loveQuote, font=("Arial", 22, "bold"))
+label = tk.Label(popup, text= loveQuote, font=("Arial", 22, "bold"), bg="lightpink")
 label.pack(padx=20, pady=20)
 
 # Auto-resize window based on content
@@ -159,15 +159,19 @@ y_position = (screen_height // 2) - (popup_height // 2)
 popup.geometry(f"{popup_width}x{popup_height}+{x_position}+{y_position}")
 
 # Close button
-button = tk.Button(popup, text="<3", command=root.destroy, font=("Arial", 20))
+button = tk.Button(popup, text="<3", command=root.destroy, font=("Arial", 30), bg="#a184af")
 button.pack(pady=10)
 
+#Copy new QuoteList file
+fileButton = tk.Button(popup, text="Insert new QuoteList\n ##Attention! Exiting QuoteList will be deleted make sure it is already depleted!", command=select_file_and_copy, font=("Arial", fontSize), bg="#aa93af")
+fileButton.pack(pady=10)
+
 #Update text information for version
-updateLabel = tk.Label(popup, text=updateText, font=("Arial", fontSize))
+updateLabel = tk.Label(popup, text=updateText, font=("Arial", fontSize), bg="lightpink")
 updateLabel.pack(pady=10)
 
 # update button
-updateButton = tk.Button(popup, text="Update to latest verison", command=git_pull, font=("Arial", 20))
+updateButton = tk.Button(popup, text="Update to latest verison", command=git_pull, font=("Arial", 20), bg="#a184af")
 if buttonVisible:
     updateButton.pack(pady=10)
 
