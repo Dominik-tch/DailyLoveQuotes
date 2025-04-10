@@ -21,7 +21,9 @@ def get_remote_commit():
         raise Exception("Fehler beim Abrufen des Remote-Commits.")
 #check current version
 def get_local_commit():
-    result = subprocess.run(["git", "rev-parse", "HEAD"], stdout=subprocess.PIPE)
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    result = subprocess.run(["git", "rev-parse", "HEAD"], stdout=subprocess.PIPE, cwd=script_dir)
     return result.stdout.decode("utf-8").strip()
 
 local = get_local_commit()
