@@ -15,7 +15,7 @@ BRANCH = "main"
 current_date = datetime.now().date()
 memory_fileName = "Memory.json"
 memory = {"days":"2025-03-01", "quoteNum":0}
-
+listDepleted = False
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -141,7 +141,7 @@ else:
 
     #checks if there are enogh quotes left and chooses the qoute
     listLen = len(quoteList) - 1
-    listDepleted = False
+    
     if listLen < memory["quoteNum"]:
         loveQuote = "I'm very sorry but you ran out of saved love quotes.\nYou are as strong as on every other day, so this is no problem for you!\nNow contact your loved one to update your love quotes as fast as possible! Or reset them."
         listDepleted = True
@@ -174,24 +174,13 @@ root.withdraw()  # Hide the main window
 popup = tk.Toplevel()
 popup.title("💖Your daily love quote <3💖" + added_title)
 popup.configure(bg="lightpink")
-popup.minsize(400, 550)
+popup.minsize(400, 250)
 
 # Create a label with large font
 label = tk.Label(popup, text= loveQuote, font=("Arial", 22, "bold"), bg="lightpink")
 label.pack(padx=20, pady=20)
 
-# Auto-resize window based on content
-popup.update_idletasks()  # Apply pending geometry changes
-popup_width = popup.winfo_reqwidth()
-popup_height = popup.winfo_reqheight()
 
-# Center the window on the screen
-screen_width = popup.winfo_screenwidth()
-screen_height = popup.winfo_screenheight()
-x_position = (screen_width // 2) - (popup_width // 2)
-y_position = (screen_height // 2) - (popup_height // 2)
-
-popup.geometry(f"{popup_width}x{popup_height}+{x_position}+{y_position}")
 
 #Memory Reset Button
 resetButton = tk.Button(popup, text="Reset the QuoteList and start from beginning", command=reset_memoryJson, font=("Arial", 30), bg="#aa93af")
@@ -213,6 +202,19 @@ updateLabel.pack(pady=10)
 updateButton = tk.Button(popup, text="Update to latest verison", command=git_pull, font=("Arial", 20), bg="#a184af")
 if buttonVisible:
     updateButton.pack(pady=10)
+
+# Auto-resize window based on content
+popup.update_idletasks()  # Apply pending geometry changes
+popup_width = popup.winfo_reqwidth()
+popup_height = popup.winfo_reqheight()
+
+# Center the window on the screen
+screen_width = popup.winfo_screenwidth()
+screen_height = popup.winfo_screenheight()
+x_position = (screen_width // 2) - (popup_width // 2)
+y_position = (screen_height // 2) - (popup_height // 2)
+
+popup.geometry(f"{popup_width}x{popup_height}+{x_position}+{y_position}")
 
 popup.mainloop()
 
