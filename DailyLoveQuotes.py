@@ -18,6 +18,8 @@ def git_pull():
     try:
         result = subprocess.run(["git", "pull"], capture_output=True, text=True, check=True, cwd=script_dir)
         print("Git pull output:\n", result.stdout)
+        updateLabel.config(text="Update abgeschlossen! Version ist aktuell.")
+        updateButton.pack_forget()
     except subprocess.CalledProcessError as e:
         print("Git pull failed:\n", e.stderr)
         
@@ -40,12 +42,16 @@ local = get_local_commit()
 remote = get_remote_commit()
 updateText = ""
 fontSize = 12
+buttonVisible = False
 if local == remote:
      updateText = "You have the latest version!"
 else:
      updateText = "There is an update available!"
      fontSize = 20
+     buttonVisible = True
 print(updateText)
+
+
 memory_fileName = "Memory.json"
 memory = {"days":"2025-03-01", "quoteNum":0}
 
@@ -142,7 +148,9 @@ updateLabel.pack(pady=10)
 
 # update button
 updateButton = tk.Button(popup, text="Update to latest verison", command=git_pull, font=("Arial", 20))
-updateButton.pack(pady=10)
+if buttonVisible:
+    updateButton.pack(pady=10)
+
 popup.mainloop()
 
 
