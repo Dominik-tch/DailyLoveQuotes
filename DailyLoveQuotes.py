@@ -112,7 +112,7 @@ root.withdraw()  # Hide the main window
 popup = tk.Toplevel()
 popup.title("💖Your daily love quote <3💖" + added_title)
 
-popup.minsize(400, 250)
+popup.minsize(400, 350)
 
 # Create a label with large font
 label = tk.Label(popup, text= loveQuote, font=("Arial", 22, "bold"))
@@ -138,6 +138,10 @@ button.pack(pady=10)
 #Update text information for version
 updateLabel = tk.Label(popup, text=updateText, font=("Arial", fontSize))
 updateLabel.pack(pady=10)
+
+# update button
+updateButton = tk.Button(popup, text="Update to latest verison", command=git_pull(), font=("Arial", 20))
+updateButton.pack(pady=10)
 popup.mainloop()
 
 
