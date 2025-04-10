@@ -27,7 +27,16 @@ def reset_memoryJson():
 def select_file_and_copy():
 
     #Backup existing QuoteList
-    os.rename("QuoteList.json", "QuoteList_" + current_date +".json")
+    uniqueName = False
+    uniqueNum = 0
+    while not uniqueName:
+        try:
+            os.rename("QuoteList.json", f"QuoteList_{str(current_date)}_{uniqueNum}.json")
+            uniqueName = True
+        except:
+             uniqueNum += 1
+             uniqueName = False
+
 
     # Benutzer lässt eine JSON-Datei auswählen
     file_path = filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
