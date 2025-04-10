@@ -25,6 +25,7 @@ def reset_memoryJson():
         memory = {"days":str(current_date - timedelta(days=1)), "quoteNum":0}
         print(memory)
         json.dump(memory, file)
+        updateLabel.config(text="!Reseted!")
 
      
 
@@ -70,6 +71,8 @@ def git_pull():
         print("Git pull output:\n", result.stdout)
         updateLabel.config(text="Update abgeschlossen! Version ist aktuell.")
         updateButton.pack_forget()
+        resetButton.pack_forget()
+        fileButton.pack_forget()
     except subprocess.CalledProcessError as e:
         print("Git pull failed:\n", e.stderr)
         
