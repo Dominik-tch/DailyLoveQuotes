@@ -14,6 +14,7 @@ BRANCH = "main"
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
 def git_pull():
+    print("Pull started:")
     try:
         result = subprocess.run(["git", "pull"], capture_output=True, text=True, check=True, cwd=script_dir)
         print("Git pull output:\n", result.stdout)
