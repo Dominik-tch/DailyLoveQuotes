@@ -15,7 +15,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 
 def git_pull():
     try:
-        result = subprocess.run(["git", "pull"], capture_output=True, text=True, check=True)
+        result = subprocess.run(["git", "pull"], capture_output=True, text=True, check=True, cwd=script_dir)
         print("Git pull output:\n", result.stdout)
     except subprocess.CalledProcessError as e:
         print("Git pull failed:\n", e.stderr)
