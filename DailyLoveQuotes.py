@@ -16,7 +16,7 @@ current_date = datetime.now().date()
 memory_fileName = "Memory.json"
 memory = {"days":"2025-03-01", "quoteNum":0}
 listDepleted = False
-
+#update test commit
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
 def seeAgain_Button():
