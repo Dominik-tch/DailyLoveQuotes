@@ -22,13 +22,13 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 def seeAgain_Button():
     print("see again")
     with open("QuoteList.json", "r", encoding="utf-8") as file:
-                quoteList = json.load(file)
-    savedLoveQuote = quoteList[memory["quoteNum"]]
+        quoteList = json.load(file)
+    savedLoveQuote = quoteList[memory["quoteNum"]-1]
     decryptedsaveQuote = crypt.decrypt(savedLoveQuote, 2334)
     label.config(text=decryptedsaveQuote)
     seeAgainButton.pack_forget()
 
-        # Auto-resize window based on content
+    # Auto-resize window based on content
     popup.update_idletasks()  # Apply pending geometry changes
     popup_width = popup.winfo_reqwidth()
     popup_height = popup.winfo_reqheight()
