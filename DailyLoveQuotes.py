@@ -121,6 +121,7 @@ def git_pull():
         #updateAnywayButton_Visible = True
         updateAnywayButton.pack(pady=15)
         updateButton.pack_forget()
+        autoResize()
 
 def git_pull_discard_changes():
     print("restoring everythin (deleting changes):")
