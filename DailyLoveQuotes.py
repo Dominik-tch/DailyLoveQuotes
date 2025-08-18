@@ -51,6 +51,7 @@ def update_anyway_Button():
     global update_anyway_Button_NUM
     update_anyway_Button_NUM -= 1
     if update_anyway_Button_NUM <= 0:
+        updateAnywayButton.pack_forget()
         git_pull_discard_changes()
     else:
         updateAnywayButton.config(text=f"Try to force update -- !USE WITH CAUTION! This could result in loss of data!\nPress {update_anyway_Button_NUM} more times to confirm")
