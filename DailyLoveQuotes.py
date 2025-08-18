@@ -54,37 +54,33 @@ def select_file_and_copy():
     # Benutzer lässt eine JSON-Datei auswählen
     file_path = filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
 
-    if (not file_path) or (file_path == ""):
+    if not file_path:
         return False
-    
-    #Backup existing QuoteList
-    uniqueName = False
-    uniqueNum = 0
-    while not uniqueName:
-        try:
-            os.rename("QuoteList.json", f"QuoteList_{str(current_date)}_{uniqueNum}.json")
-            uniqueName = True
-        except:
-             uniqueNum += 1
-             uniqueName = False
-    
-    if file_path:
 
-        # Zielpfad im Repository
-        fixed_file_name = "QuoteList.json"
-        repo_root = "."
-        file_name = os.path.basename(file_path)
-        destination_path = os.path.join(repo_root, file_name)
-        os.rename(file_name, "QuoteList.json")
+    # Backup der bestehenden QuoteList.json, falls vorhanden
+    if os.path.exists("QuoteList.json"):
+        unique_num = 0
+        while True:
+            backup_name = f"QuoteList_{current_date}_{unique_num}.json"
+            if not os.path.exists(backup_name):
+                os.rename("QuoteList.json", backup_name)
+                break
+            unique_num += 1
 
-        # Kopiere die Datei
-        shutil.copy(file_path, repo_root)
-        print(f"Datei '{file_name}' wurde ins Repository kopiert.")
+    # Neue Datei kopieren und im Repo als QuoteList.json speichern
+    destination_path = "QuoteList.json"
+    try:
+        shutil.copy(file_path, destination_path)
+        print(f"Datei wurde erfolgreich als '{destination_path}' kopiert.")
+    except Exception as e:
+        print(f"Fehler beim Kopieren: {e}")
+        return False
+
     return True
 
 def quoteList_insert():
-     succesful = select_file_and_copy()
-     if succesful:
+    succesful = select_file_and_copy()
+    if succesful:
         reset_memoryJson()
      
 
@@ -110,8 +106,6 @@ def get_remote_commit():
         raise Exception("Fehler beim Abrufen des Remote-Commits.")
 #check current version
 def get_local_commit():
-    
-
     result = subprocess.run(["git", "rev-parse", "HEAD"], stdout=subprocess.PIPE, cwd=script_dir)
     return result.stdout.decode("utf-8").strip()
 
