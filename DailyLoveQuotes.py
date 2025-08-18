@@ -11,7 +11,8 @@ import requests
 
 REPO = "dominik-tch/DailyLoveQuotes"
 BRANCH = "main"
-
+update_anyway_Button_NUM = 5
+updateAnywayButton_Visible = False
 current_date = datetime.now().date()
 memory_fileName = "Memory.json"
 memory = {"days":"2025-03-01", "quoteNum":0}
@@ -33,6 +34,12 @@ def restart_program():
     python = sys.executable
     os.execl(python, python, *sys.argv)
 
+def update_anyway_Button():
+    update_anyway_Button -= 1
+    if update_anyway_Button <= 0:
+        git_pull_discard_changes()
+    else:
+        updateAnywayButton.config(text=f"Try to force update -- !USE WITH CAUTION! This could result in loss of data!\nPress {update_anyway_Button_NUM} more times to confirm")
 def seeAgain_Button():
     print("see again")
     with open("QuoteList.json", "r", encoding="utf-8") as file:
@@ -109,7 +116,20 @@ def git_pull():
         fileButton.pack_forget()
     except subprocess.CalledProcessError as e:
         print("Git pull failed:\n", e.stderr)
-        
+        updateLabel.config(text="Update has failed! Maybe there are unwanted local changes to this program. Try the button below:")
+        #updateAnywayButton_Visible = True
+        updateAnywayButton.pack(pady=15)
+        updateButton.pack_forget()
+
+def git_pull_discard_changes():
+    print("restoring everythin (deleting changes):")
+    try:
+        result = subprocess.run(["git", "restore", "."], capture_output=True, text=True, check=True, cwd=script_dir)
+        print("Git restore output:\n", result.stdout)
+        git_pull()
+    except subprocess.CalledProcessError as e:
+        print("Git pull failed:\n", e.stderr)
+
 def get_remote_commit():
     url = f"https://api.github.com/repos/{REPO}/commits/{BRANCH}"
     response = requests.get(url)
@@ -244,6 +264,11 @@ if buttonVisible:
 # restart button
 restartButton = tk.Button(popup, text="Restart", command=restart_program, font=("Arial", 20), bg="#a184af")
 restartButton.pack(pady=15)
+
+#update anyway button
+updateAnywayButton = tk.Button(popup, text=f"Try to force update -- !USE WITH CAUTION! This could result in loss of data!\nPress {update_anyway_Button_NUM} more times to confirm", command=update_anyway_Button, font=("Arial", 20), bg="#9b2828")
+if updateAnywayButton_Visible:
+    updateAnywayButton.pack(pady=15)
 # Auto-resize window based on content
 popup.update_idletasks()  # Apply pending geometry changes
 popup_width = popup.winfo_reqwidth()
