@@ -8,7 +8,7 @@ from tkinter import messagebox, filedialog
 import shutil
 import subprocess
 import requests
-#update test
+
 REPO = "dominik-tch/DailyLoveQuotes"
 BRANCH = "main"
 update_anyway_Button_NUM = 5
