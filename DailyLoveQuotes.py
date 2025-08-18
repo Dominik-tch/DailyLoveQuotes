@@ -48,6 +48,7 @@ def restart_program():
     os.execl(python, python, *sys.argv)
 
 def update_anyway_Button():
+    global update_anyway_Button_NUM
     update_anyway_Button_NUM -= 1
     if update_anyway_Button_NUM <= 0:
         git_pull_discard_changes()
