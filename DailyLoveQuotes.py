@@ -18,6 +18,16 @@ memory = {"days":"2025-03-01", "quoteNum":0}
 listDepleted = False
 #update test commit
 script_dir = os.path.dirname(os.path.abspath(__file__))
+def on_close():
+    root.quit()      # beendet die Tkinter mainloop
+    sys.exit(0)      # beendet das gesamte Python-Programm
+
+def force_foreground(root):
+    # Erst "topmost" aktivieren
+    root.lift()
+    root.attributes("-topmost", True)
+    root.after_idle(root.attributes, "-topmost", False)
+
 
 def restart_program():
     """Startet das aktuelle Python-Skript neu."""
@@ -194,12 +204,14 @@ if len(loveQuote) > 80:
 # Create a window
 root = tk.Tk()
 root.withdraw()  # Hide the main window
-
+root.protocol("WM_DELETE_WINDOW", on_close)
 # Custom pop-up with large font
 popup = tk.Toplevel()
 popup.title("💖Your daily love quote <3💖" + added_title)
 popup.configure(bg="lightpink")
 popup.minsize(400, 250)
+popup.protocol("WM_DELETE_WINDOW", on_close)
+force_foreground(popup)
 
 # Create a label with large font
 label = tk.Label(popup, text= loveQuote, font=("Arial", 22, "bold"), bg="lightpink")
@@ -230,6 +242,9 @@ updateButton = tk.Button(popup, text="Update to latest verison", command=git_pul
 if buttonVisible:
     updateButton.pack(pady=10)
 
+# restart button
+restartButton = tk.Button(popup, text="Restart", command=restart_program, font=("Arial", 20), bg="#a184af")
+restartButton.pack(pady=15)
 # Auto-resize window based on content
 popup.update_idletasks()  # Apply pending geometry changes
 popup_width = popup.winfo_reqwidth()
