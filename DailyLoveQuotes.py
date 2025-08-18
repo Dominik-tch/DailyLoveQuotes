@@ -48,8 +48,8 @@ def restart_program():
     os.execl(python, python, *sys.argv)
 
 def update_anyway_Button():
-    update_anyway_Button -= 1
-    if update_anyway_Button <= 0:
+    update_anyway_Button_NUM -= 1
+    if update_anyway_Button_NUM <= 0:
         git_pull_discard_changes()
     else:
         updateAnywayButton.config(text=f"Try to force update -- !USE WITH CAUTION! This could result in loss of data!\nPress {update_anyway_Button_NUM} more times to confirm")
@@ -262,26 +262,16 @@ updateButton = tk.Button(popup, text="Update to latest verison", command=git_pul
 if buttonVisible:
     updateButton.pack(pady=10)
 
-# restart button
-restartButton = tk.Button(popup, text="Restart", command=restart_program, font=("Arial", 20), bg="#a184af")
-restartButton.pack(pady=15)
-
 #update anyway button
 updateAnywayButton = tk.Button(popup, text=f"Try to force update -- !USE WITH CAUTION! This could result in loss of data!\nPress {update_anyway_Button_NUM} more times to confirm", command=update_anyway_Button, font=("Arial", 20), bg="#9b2828")
 if updateAnywayButton_Visible:
     updateAnywayButton.pack(pady=15)
-# Auto-resize window based on content
-popup.update_idletasks()  # Apply pending geometry changes
-popup_width = popup.winfo_reqwidth()
-popup_height = popup.winfo_reqheight()
 
-# Center the window on the screen
-screen_width = popup.winfo_screenwidth()
-screen_height = popup.winfo_screenheight()
-x_position = (screen_width // 2) - (popup_width // 2)
-y_position = (screen_height // 2) - (popup_height // 2)
+# restart button
+restartButton = tk.Button(popup, text="Restart", command=restart_program, font=("Arial", 20), bg="#a184af")
+restartButton.pack(pady=15)
 
-popup.geometry(f"{popup_width}x{popup_height}+{x_position}+{y_position}")
+autoResize()
 
 popup.mainloop()
 
