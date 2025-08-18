@@ -28,6 +28,19 @@ def force_foreground(root):
     root.attributes("-topmost", True)
     root.after_idle(root.attributes, "-topmost", False)
 
+def autoResize():
+    # Auto-resize window based on content
+    popup.update_idletasks()  # Apply pending geometry changes
+    popup_width = popup.winfo_reqwidth()
+    popup_height = popup.winfo_reqheight()
+
+    # Center the window on the screen
+    screen_width = popup.winfo_screenwidth()
+    screen_height = popup.winfo_screenheight()
+    x_position = (screen_width // 2) - (popup_width // 2)
+    y_position = (screen_height // 2) - (popup_height // 2)
+
+    popup.geometry(f"{popup_width}x{popup_height}+{x_position}+{y_position}")
 
 def restart_program():
     """Startet das aktuelle Python-Skript neu."""
@@ -48,19 +61,7 @@ def seeAgain_Button():
     decryptedsaveQuote = crypt.decrypt(savedLoveQuote, 2334)
     label.config(text=decryptedsaveQuote)
     seeAgainButton.pack_forget()
-
-    # Auto-resize window based on content
-    popup.update_idletasks()  # Apply pending geometry changes
-    popup_width = popup.winfo_reqwidth()
-    popup_height = popup.winfo_reqheight()
-
-    # Center the window on the screen
-    screen_width = popup.winfo_screenwidth()
-    screen_height = popup.winfo_screenheight()
-    x_position = (screen_width // 2) - (popup_width // 2)
-    y_position = (screen_height // 2) - (popup_height // 2)
-
-    popup.geometry(f"{popup_width}x{popup_height}+{x_position}+{y_position}")
+    autoResize()
 
 def reset_memoryJson():
      print("Reseting")
