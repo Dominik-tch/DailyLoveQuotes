@@ -19,6 +19,11 @@ listDepleted = False
 #update test commit
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
+def restart_program():
+    """Startet das aktuelle Python-Skript neu."""
+    python = sys.executable
+    os.execl(python, python, *sys.argv)
+
 def seeAgain_Button():
     print("see again")
     with open("QuoteList.json", "r", encoding="utf-8") as file:
